@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import openai
+from openai import OpenAI
 import os
 
 app = FastAPI()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 class LessonRequest(BaseModel):
     subject: str
@@ -34,12 +34,15 @@ Include:
 - Summary
 """
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4o-mini",
-        messages=[{"role": "user", "content": prompt}],
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
         max_tokens=800
     )
 
     return {
         "lesson_note": response.choices[0].message.content
     }
+
