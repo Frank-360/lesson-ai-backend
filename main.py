@@ -1,38 +1,42 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from openai import OpenAI
-import os
-
-app = FastAPI()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-class LessonRequest(BaseModel):
-    subject: str
-    topic: str
-    grade: str
-    curriculum: str = "Nigerian"
-
-@app.post("/generate-lesson")
-async def generate_lesson(data: LessonRequest):
-    prompt = f"""
+prompt = f"""
 You are an expert teacher.
 
-Generate a detailed lesson note for:
-Subject: {data.subject}
-Topic: {data.topic}
-Class: {data.grade}
-Curriculum: {data.curriculum}
+Generate a WELL-FORMATTED lesson note in MARKDOWN.
 
-Include:
-- Lesson objectives
-- Introduction
-- Main content
-- Examples
-- Class activities
-- Evaluation questions
-- Summary
+Details:
+- Subject: {data.subject}
+- Topic: {data.topic}
+- Class: {data.grade}
+- Curriculum: {data.curriculum}
+
+FORMAT STRICTLY AS FOLLOWS:
+
+## Lesson Title
+## Learning Objectives
+(use bullet points)
+
+## Introduction
+(short and engaging)
+
+## Main Content
+(use subheadings and bullet points where appropriate)
+
+## Worked Examples
+(numbered examples)
+
+## Class Activities
+(bulleted or numbered)
+
+## Evaluation / Assessment
+(at least 5 questions)
+
+## Summary
+(short recap)
+
+Use clear headings, bullet points, and spacing.
+Do NOT write everything in one paragraph.
 """
+
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -43,6 +47,12 @@ Include:
     )
 
     return {
-        "lesson_note": response.choices[0].message.content
-    }
+    "subject": data.subject,
+    "topic": data.topic,
+    "grade": data.grade,
+    "curriculum": data.curriculum,
+    "format": "markdown",
+    "lesson_note": response.choices[0].message.content
+}
+
 
