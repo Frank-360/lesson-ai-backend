@@ -1,41 +1,72 @@
 prompt = f"""
-You are an expert teacher.
+You are an experienced secondary school teacher and curriculum expert.
 
-Generate a WELL-FORMATTED lesson note in MARKDOWN.
+Generate a FULL, DETAILED, and WELL-EXPLAINED lesson note based on the information provided.
 
-Details:
-- Subject: {data.subject}
-- Topic: {data.topic}
-- Class: {data.grade}
-- Curriculum: {data.curriculum}
+Target learners: Senior Secondary School students (SSS).
+Curriculum: Nigerian curriculum (WAEC / NECO standard).
+Teaching style: Clear, explanatory, student-friendly, and exam-focused.
 
-FORMAT STRICTLY AS FOLLOWS:
+GENERAL INSTRUCTIONS:
+- Do NOT produce summary or outline-only notes.
+- Each main concept MUST be explained in at least one full paragraph.
+- Use simple language suitable for Nigerian secondary school students.
+- Where appropriate, include everyday examples and classroom illustrations.
+- Align explanations with WAEC and NECO examination expectations.
+- Avoid overly technical university-level language.
 
-## Lesson Title
-## Learning Objectives
-(use bullet points)
+STRUCTURE THE LESSON NOTE USING THE FOLLOWING HEADINGS:
 
-## Introduction
-(short and engaging)
+1. Lesson Title
+2. Subject
+3. Class
+4. Curriculum
+5. Lesson Objectives  
+   (Use "By the end of the lesson, students should be able to:" and number objectives clearly)
 
-## Main Content
-(use subheadings and bullet points where appropriate)
+6. Introduction  
+   - Start with a short engaging explanation or classroom question.
+   - Clearly introduce the topic and its importance.
 
-## Worked Examples
-(numbered examples)
+7. Main Content  
+   Break this into well-labeled subtopics.  
+   For EACH subtopic:
+   - Provide a clear definition.
+   - Follow with a detailed explanation (minimum one full paragraph).
+   - Give at least one example where applicable.
+   - Where relevant, add exam tips such as:
+     “In examinations, students should remember that…”
 
-## Class Activities
-(bulleted or numbered)
+8. Worked Examples (where applicable)  
+   - Show step-by-step explanations (e.g. Punnett squares, calculations, diagrams described in words).
 
-## Evaluation / Assessment
-(at least 5 questions)
+9. Real-Life Applications  
+   - Explain how the topic applies to real life, health, agriculture, or technology.
 
-## Summary
-(short recap)
+10. Classroom Activities  
+   - Group activity
+   - Individual activity
 
-Use clear headings, bullet points, and spacing.
-Do NOT write everything in one paragraph.
-"""
+11. Evaluation / Assessment Questions  
+   - At least 5 questions
+   - Mix of:
+     • Define
+     • Explain
+     • Differentiate
+     • Apply
+
+12. Summary  
+   - Brief but meaningful recap of the key points taught.
+
+13. Assignment  
+   - Clear take-home task suitable for SSS students.
+
+STYLE RULES:
+- Write in complete sentences and paragraphs.
+- Avoid bullet-only explanations.
+- Ensure logical flow from introduction to summary.
+- Maintain professional teacher tone.
+
 
 
     response = client.chat.completions.create(
