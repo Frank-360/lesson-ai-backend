@@ -69,8 +69,8 @@ STYLE RULES:
 
 """
 
-@app.post("/generateLesson")
-def generateLesson(data: LessonRequest):
+@app.post("/generate-lesson")
+def  generate_lesson(data: LessonRequest):
 
     USER_PROMPT = f"""
     Generate a detailed lesson note using the teaching rules provided.
