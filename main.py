@@ -69,28 +69,36 @@ STYLE RULES:
 
 """
 
-USER_PROMPT = f"""
-Generate a detailed lesson note using the teaching rules provided.
+@app.post("/generateLesson")
+def generateLesson(data: LessonRequest):
 
-Lesson Title: {data.topic}
-Subject: {data.subject}
-Class: {data.grade}
-Curriculum: {data.curriculum}
+    USER_PROMPT = f"""
+    Generate a detailed lesson note using the teaching rules provided.
 
-Ensure the lesson note is well explained, exam-focused, and suitable for Nigerian secondary school students.
-"""
+    Lesson Title: {data.topic}
+    Subject: {data.subject}
+    Class: {data.grade}
+    Curriculum: {data.curriculum}
+    """
 
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": USER_PROMPT}
+        ],
+        max_tokens=1200,
+        temperature=0.4
+    )
 
-# 3️⃣ OpenAI call
-response = client.chat.completions.create(
-    model="gpt-4o-mini",
-    messages=[
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": USER_PROMPT}
-    ],
-    max_tokens=1200,
-    temperature=0.4
-)
+    return {
+        "subject": data.subject,
+        "topic": data.topic,
+        "grade": data.grade,
+        "curriculum": data.curriculum,
+        "lesson_note": response.choices[0].message.content
+    }
+
 
 
 
