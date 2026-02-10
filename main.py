@@ -1,4 +1,4 @@
-prompt = f"""
+SYSTEM_PROMPT = f"""
 You are an experienced secondary school teacher and curriculum expert.
 
 Generate a FULL, DETAILED, and WELL-EXPLAINED lesson note based on the information provided.
@@ -67,23 +67,29 @@ STYLE RULES:
 - Ensure logical flow from introduction to summary.
 - Maintain professional teacher tone.
 
+USER_PROMPT = f"""
+Generate a detailed lesson note using the teaching rules provided.
+
+Lesson Title: {data.topic}
+Subject: {data.subject}
+Class: {data.grade}
+Curriculum: {data.curriculum}
+
+Ensure the lesson note is well explained, exam-focused, and suitable for Nigerian secondary school students.
+"""
 
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=800
-    )
+# 3️⃣ OpenAI call
+response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": USER_PROMPT}
+    ],
+    max_tokens=1200,
+    temperature=0.4
+)
 
-    return {
-    "subject": data.subject,
-    "topic": data.topic,
-    "grade": data.grade,
-    "curriculum": data.curriculum,
-    "format": "markdown",
-    "lesson_note": response.choices[0].message.content
-}
+
 
 
