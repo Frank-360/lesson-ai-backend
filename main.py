@@ -1,3 +1,11 @@
+from fastapi import FastAPI
+from openai import OpenAI
+import os
+
+app = FastAPI()
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 SYSTEM_PROMPT = """
 You are an experienced secondary school teacher and curriculum expert.
 
