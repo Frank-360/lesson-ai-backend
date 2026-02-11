@@ -81,6 +81,7 @@ STYLE RULES:
 - Avoid bullet-only explanations.
 - Ensure logical flow from introduction to summary.
 - Maintain professional teacher tone.
+- Ensure the lesson note is detailed, thorough, and sufficiently comprehensive for a full classroom session.
 
 """
 
@@ -102,7 +103,7 @@ def generate_lesson(data: LessonRequest):
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": USER_PROMPT}
         ],
-        max_tokens=1200,
+        max_tokens=1800,
         temperature=0.4
     )
 
