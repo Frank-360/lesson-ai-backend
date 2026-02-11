@@ -1,10 +1,17 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from openai import OpenAI
 import os
 
 app = FastAPI()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI()
+
+class LessonRequest(BaseModel):
+    subject: str
+    topic: str
+    grade: str
+    curriculum: str
 
 SYSTEM_PROMPT = """
 You are an experienced secondary school teacher and curriculum expert.
@@ -78,7 +85,7 @@ STYLE RULES:
 """
 
 @app.post("/generate-lesson")
-def  generate_lesson(data: LessonRequest):
+def generate_lesson(data: LessonRequest):
 
     USER_PROMPT = f"""
     Generate a detailed lesson note using the teaching rules provided.
