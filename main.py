@@ -39,14 +39,20 @@ ACADEMIC DEPTH REQUIREMENTS:
 - Describe diagrams clearly in words where necessary.
 - Use practical Nigerian real-life examples where relevant.
 
-MATHEMATICS FORMATTING RULES:
-- ALL mathematical expressions must use LaTeX formatting.
-- Wrap inline expressions using \( \).
-- Wrap standalone equations using $$ $$.
-- Example:
-  $$ ax^2 + bx + c = 0 $$
-- Use proper fractions:
-  $$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$
+MATHEMATICS FORMATTING RULES (STRICTLY ENFORCE):
+
+- EVERY mathematical expression MUST be written in LaTeX.
+- NEVER write raw expressions like x^2 + 5x.
+- ALWAYS wrap inline math inside: \( ... \)
+- ALWAYS wrap standalone equations inside: $$ ... $$
+
+Example of CORRECT formatting:
+Inline: \( x^2 + 6x + 5 = 0 \)
+
+Standalone:
+$$ x^2 + 6x + 5 = 0 $$
+
+Do NOT output plain-text math.
 
 STRUCTURE THE LESSON USING CLEAR MARKDOWN HEADINGS:
 
