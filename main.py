@@ -5,13 +5,15 @@ import os
 
 app = FastAPI()
 
-client = OpenAI()
+# Initialize OpenAI client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 class LessonRequest(BaseModel):
     subject: str
     topic: str
     grade: str
     curriculum: str
+
 
 SYSTEM_PROMPT = """
 You are an experienced Nigerian secondary school teacher, curriculum expert, and WAEC examiner.
@@ -62,37 +64,49 @@ WRITING STYLE RULES:
 
 The lesson must feel like it was written by a highly experienced WAEC examiner.
 """
+
+
+@app.get("/")
+def root():
+    return {"status": "Planora AI backend running"}
+
+
 @app.post("/generate-lesson")
 def generate_lesson(data: LessonRequest):
 
-    USER_PROMPT = f"""
-    Generate a detailed lesson note using the teaching rules provided.
+    user_prompt = f"""
+Generate a detailed lesson note using the teaching rules provided.
 
-    Lesson Title: {data.topic}
-    Subject: {data.subject}
-    Class: {data.grade}
-    Curriculum: {data.curriculum}
-    """
+Lesson Title: {data.topic}
+Subject: {data.subject}
+Class: {data.grade}
+Curriculum: {data.curriculum}
+"""
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": USER_PROMPT}
-        ],
-        max_tokens=3000,
-        temperature=0.4
-    )
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt}
+            ],
+            max_tokens=3000,
+            temperature=0.4
+        )
 
-    return {
-        "subject": data.subject,
-        "topic": data.topic,
-        "grade": data.grade,
-        "curriculum": data.curriculum,
-        "lesson_note": response.choices[0].message.content
-    }
+        lesson_content = response.choices[0].message.content
 
+        return {
+            "success": True,
+            "subject": data.subject,
+            "topic": data.topic,
+            "grade": data.grade,
+            "curriculum": data.curriculum,
+            "lesson_note": lesson_content
+        }
 
-
-
-
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
