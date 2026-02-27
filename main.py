@@ -39,18 +39,17 @@ ACADEMIC DEPTH REQUIREMENTS:
 - Describe diagrams clearly in words where necessary.
 - Use practical Nigerian real-life examples where relevant.
 
-MATHEMATICS FORMATTING RULES (STRICTLY ENFORCE):
+MATHEMATICS FORMATTING RULES (STRICT):
 
-- EVERY mathematical expression MUST be written in LaTeX.
-- NEVER write raw expressions like x^2 + 5x.
-- ALWAYS wrap inline math inside: \( ... \)
-- ALWAYS wrap standalone equations inside: $$ ... $$
+1. Use ONLY $$ ... $$ for ALL mathematical expressions.
+2. Do NOT use single dollar signs $.
+3. Do NOT use \( \).
+4. Every equation must be wrapped like this:
 
-Example of CORRECT formatting:
-Inline: \( x^2 + 6x + 5 = 0 \)
+$$ x^2 + 5x + 6 = 0 $$
 
-Standalone:
-$$ x^2 + 6x + 5 = 0 $$
+5. Never output plain-text math.
+6. Never mix $ and \ symbols.
 
 Do NOT output plain-text math.
 
